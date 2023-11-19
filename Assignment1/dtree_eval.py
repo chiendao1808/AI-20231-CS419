@@ -45,7 +45,7 @@ def evaluatePerformance(numTrials=numOfTrials):
     stumpAccuracies = []
     dt3Accuracies = []
     
-    training_sizes = np.linspace(0, 1000, 10)
+    training_sizes = np.linspace(1, 100, 100)
     print(training_sizes)
 
     # perform 100 trials
@@ -99,20 +99,32 @@ def evaluatePerformance(numTrials=numOfTrials):
             dt3Accuracies.append(accuracy_score(ytest, y_pred_dt3))
 
     # Update these statistics result
-    print(len(treeAccuracies))
     meanDecisionTreeAccuracy = np.mean(treeAccuracies)
     stddevDecisionTreeAccuracy = np.std(treeAccuracies)
+    yTreeAccuracies = []
+    for i in range(0, len(treeAccuracies), 10):
+        yTreeAccuracies.append(np.mean(treeAccuracies[i : i + 9]))
+    print(len(yTreeAccuracies))
     
     # stump
     meanDecisionStumpAccuracy = np.mean(stumpAccuracies)
     stddevDecisionStumpAccuracy = np.std(stumpAccuracies)
+    yStumpAccuracies = []
+    for i in range(0, len(treeAccuracies), 10):
+        yStumpAccuracies.append(np.mean(stumpAccuracies[i : i + 9]))
+    print(len(yTreeAccuracies))
 
     # dt3
     meanDT3Accuracy = np.mean(dt3Accuracies)
     stddevDT3Accuracy = np.std(dt3Accuracies)
+    yDT3Accuracies = []
+    for i in range(0, len(treeAccuracies), 10):
+        yDT3Accuracies.append(np.mean(dt3Accuracies[i : i + 9]))
+    print(len(yTreeAccuracies))
     
     # plot chart
-    # plt.plot(training_sizes, treeAccuracies, training_sizes, stumpAccuracies, training_sizes, dt3Accuracies);
+    # plt.plot(training_sizes, yTreeAccuracies, training_sizes, yStumpAccuracies, training_sizes, yDT3Accuracies);
+    # plt.title("Tree Decision Accuracy")
     # plt.show()
 
     # make certain that the return value matches the API specification
