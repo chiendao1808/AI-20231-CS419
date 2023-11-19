@@ -35,19 +35,23 @@ def evaluatePerformance(numTrials=numOfTrials):
     # Load data from dataset SPECTF.dat
     filename = "./Assignment1/data/SPECTF.dat"
     data = np.loadtxt(filename, delimiter=",")
+    
     X = data[:, 1:]
     y = np.array([data[:, 0]]).T
     n, d = X.shape
 
-    # create lists to hold data
+    # create lists to store data
     treeAccuracies = []
     stumpAccuracies = []
     dt3Accuracies = []
+    
+    training_sizes = np.linspace(0, 1000, 10)
+    print(training_sizes)
 
     # perform 100 trials
     for x in range(0, numTrials):
         # shuffle the data
-        idx = np.arange(n)
+        idx = np.arange(n) # idx = [0, 1,... n-1]
         np.random.seed(13)
         np.random.shuffle(idx)
         X = X[idx]
@@ -55,19 +59,19 @@ def evaluatePerformance(numTrials=numOfTrials):
 
         # Split the data randomly into 10 folds
         folds = []
-        intervalDivider = len(X) / numOfFoldsPerTrial
+        interval_divider = len(X) / numOfFoldsPerTrial
         for fold in range(0, numOfFoldsPerTrial):
-            # designate a new testing range
-            Xtest = X[int(fold * intervalDivider) : int((fold + 1) * intervalDivider,) :]
-            ytest = y[int(fold * intervalDivider) : int((fold + 1) * intervalDivider,) :]
-            Xtrain = X[: int((fold * intervalDivider),) :]
-            ytrain = y[: int((fold * intervalDivider),) :]
+            # design a new testing range
+            Xtest = X[int(fold * interval_divider) : int((fold + 1) * interval_divider) :]
+            ytest = y[int(fold * interval_divider) : int((fold + 1) * interval_divider) :]
+            Xtrain = X[: int((fold * interval_divider)) :]
+            ytrain = y[: int((fold * interval_divider)) :]
             Xtrain = Xtrain.tolist()
             ytrain = ytrain.tolist()
 
             # complete the training data set so that it contains all
             # data except for the current test fold
-            for dataRow in range(int((fold + 1) * intervalDivider), len(X)):
+            for dataRow in range(int((fold + 1) * interval_divider), len(X)):
                 Xtrain.append(X[dataRow])
                 ytrain.append(y[dataRow])
 
@@ -94,13 +98,22 @@ def evaluatePerformance(numTrials=numOfTrials):
             stumpAccuracies.append(accuracy_score(ytest, y_pred_stump))
             dt3Accuracies.append(accuracy_score(ytest, y_pred_dt3))
 
-    # Update these statistics based on the results of your experiment
+    # Update these statistics result
+    print(len(treeAccuracies))
     meanDecisionTreeAccuracy = np.mean(treeAccuracies)
     stddevDecisionTreeAccuracy = np.std(treeAccuracies)
+    
+    # stump
     meanDecisionStumpAccuracy = np.mean(stumpAccuracies)
     stddevDecisionStumpAccuracy = np.std(stumpAccuracies)
+
+    # dt3
     meanDT3Accuracy = np.mean(dt3Accuracies)
     stddevDT3Accuracy = np.std(dt3Accuracies)
+    
+    # plot chart
+    # plt.plot(training_sizes, treeAccuracies, training_sizes, stumpAccuracies, training_sizes, dt3Accuracies);
+    # plt.show()
 
     # make certain that the return value matches the API specification
     stats = np.zeros((3, 2))
