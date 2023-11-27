@@ -1,9 +1,4 @@
 '''
-    TEST SCRIPT FOR MULTIVARIATE LINEAR REGRESSION
-    AUTHOR Eric Eaton, Vishnu Purushothaman Sreenivasan
-'''
-
-'''
 Numpy is a standard library in python that lets you do matrix and vector operations like Matlab in python.
 Check out documentation here: http://wiki.scipy.org/Tentative_NumPy_Tutorial
 If you are a Matlab user this page is super useful: http://wiki.scipy.org/NumPy_for_Matlab_Users 
@@ -21,7 +16,7 @@ if __name__ == "__main__":
     '''
     
     # load the data
-    filePath = "/content/drive/MyDrive/Homework 1/CIS419--Decision-Tree-Learning-Linear-Regression/data/multivariateData.dat"
+    filePath = "./data/multivariateData.dat"
     file = open(filePath,'r')
     allData = np.loadtxt(file, delimiter=',')
 

@@ -73,7 +73,7 @@ class LinearRegression:
         """
         n = len(y)
         n, d = X.shape
-        if self.theta == None:
+        if self.theta.all() == None:
             self.theta = np.matrix(np.zeros((d, 1)))
         self.theta = self.gradientDescent(X, y, self.theta)
 

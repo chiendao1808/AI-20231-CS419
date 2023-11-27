@@ -140,7 +140,7 @@ if __name__ == "__main__":
     """
 
     # load the data
-    filePath = "/content/drive/MyDrive/Homework 1/CIS419--Decision-Tree-Learning-Linear-Regression/data/univariateData.dat"
+    filePath = "./data/univariateData.dat"
     file = open(filePath, "r")
     allData = np.loadtxt(file, delimiter=",")
 
