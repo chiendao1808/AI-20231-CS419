@@ -3,9 +3,6 @@ import numpy as np
 class LogisticRegression:
 
     def __init__(self, alpha = 0.01, regLambda=0.01, epsilon=0.0001, maxNumIters = 10000):
-        '''
-        Constructor
-        '''
         self.alpha = alpha
         self.regLambda = regLambda
         self.epsilon = epsilon
@@ -103,11 +100,6 @@ class LogisticRegression:
         return np.array(self.sigmoid(X * self.theta))
 
     def sigmoid(self, z):
-        '''
-        This method wasn't provided in the hw template...
-        Computes sigmoid for both vectors and matrices
-        '''
-
         # test to verify this works for matrices AND vectors
         # test_z_matrix = np.matrix('1 2; 3 4')
         # test_z_vector = np.array([2,3,1,0])

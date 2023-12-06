@@ -1,5 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt, pylab
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
@@ -7,7 +7,7 @@ from polyreg import PolynomialRegression
 
 from sklearn.linear_model import Ridge
 from sklearn.preprocessing import PolynomialFeatures
-from sklearn import cross_validation
+from sklearn.model_selection import LeaveOneOut
 
 from polyreg import learningCurve
 
@@ -26,13 +26,13 @@ def plotLearningCurve(errorTrain, errorTest, regLambda, degree):
 
     xs = np.arange(len(errorTrain))
     plt.plot(xs, errorTrain, 'r-o')
-    plt.hold(True)
+    # plt.hold(True)
     plt.plot(xs, errorTest, 'b-o')
     plt.plot(xs, np.ones(len(xs)), 'k--')
-    plt.hold(False)
+    # plt.hold(False)
     plt.legend(['Training Error', 'Testing Error'], loc = 'best')
-    plt.title('Learning Curve (d='+str(degree)+', lambda='+str(regLambda)+')')
-    plt.xlabel('Training samples')
+    plt.title('(d='+str(degree)+', lambda='+str(regLambda)+')')
+    # plt.xlabel('Training samples')
     plt.ylabel('Error')
     plt.yscale('log')
     plt.ylim((0,maxY))
@@ -49,7 +49,7 @@ def generateLearningCurve(X, y, degree, regLambda):
     errorTrains = np.zeros((n, n-1));
     errorTests = np.zeros((n, n-1));
     
-    loo = cross_validation.LeaveOneOut(n)
+    loo = LeaveOneOut().split(X)
     itrial = 0
     for train_index, test_index in loo:
         #print("TRAIN indices:", train_index, "TEST indices:", test_index)
